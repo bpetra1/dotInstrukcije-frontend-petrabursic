@@ -20,8 +20,8 @@ function LoginPage() {
   function handleStudentSubmit(event) {
     event.preventDefault();
     const data = {
-      email: studentEmail,
-      password: studentPassword,
+      Email: studentEmail,
+      Password: studentPassword,
     };
     handleLogin(data, "student");
   }
@@ -29,8 +29,8 @@ function LoginPage() {
   function handleProfessorSubmit(event) {
     event.preventDefault();
     const data = {
-      email: professorEmail,
-      password: professorPassword,
+      Email: professorEmail,
+      Password: professorPassword,
     };
     handleLogin(data, "professor");
   }
