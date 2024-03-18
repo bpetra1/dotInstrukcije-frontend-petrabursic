@@ -37,37 +37,48 @@ function RegisterPage() {
   const handleStudentSubmit = async (event) => {
     event.preventDefault();
 
-    // Prepare the data to be sent
-    const studentData = new FormData();
-    studentData.append("name", studentName);
-    studentData.append("surname", studentSurname);
-    studentData.append("email", studentEmail);
-    studentData.append("password", studentPassword);
-    studentData.append("confirmPassword", studentConfirmPassword);
-    studentData.append("profilePicture", studentProfilePicture);
+    // Convert profile picture to base64 string
+    const file = studentProfilePicture;
+    const reader = new FileReader();
+    reader.onload = () => {
+        const profilePictureBase64 = reader.result.split(",")[1];
 
-    console.log(studentData);
+        // Prepare the data to be sent
+        const studentData = new FormData();
+        studentData.append("name", studentName);
+        studentData.append("surname", studentSurname);
+        studentData.append("email", studentEmail);
+        studentData.append("password", studentPassword);
+        studentData.append("confirmPassword", studentConfirmPassword);
+        studentData.append("profilePictureUrl", profilePictureBase64);
 
-    // Send the data to the server
-    handlerRegister(studentData, "student");
+        // Send the data to the server
+        handlerRegister(studentData, "student");
+    };
+    reader.readAsDataURL(file);
+};
+
+const handleProfessorSubmit = async (event) => {
+  event.preventDefault();
+
+  const reader = new FileReader();
+  reader.onload = () => {
+      const profilePictureBase64 = reader.result.split(",")[1];
+
+      const professorData = new FormData();
+      professorData.append("name", professorName);
+      professorData.append("surname", professorSurname);
+      professorData.append("email", professorEmail);
+      professorData.append("password", professorPassword);
+      professorData.append("confirmPassword", professorConfirmPassword);
+      professorData.append("profilePictureUrl", profilePictureBase64);
+      professorData.append("subjects", professorSubjects.map((s) => s.url));
+
+      handlerRegister(professorData, "professor");
   };
+  reader.readAsDataURL(professorProfilePicture);
+};
 
-  const handleProfessorSubmit = async (event) => {
-    event.preventDefault();
-
-    const professorData = new FormData();
-    professorData.append("name", professorName);
-    professorData.append("surname", professorSurname);
-    professorData.append("email", professorEmail);
-    professorData.append("password", professorPassword);
-    professorData.append("confirmPassword", professorConfirmPassword);
-    professorData.append("profilePicture", professorProfilePicture);
-    professorData.append("subjects", professorSubjects.map((s) => s.url));
-
-    console.log(professorData);
-
-    handlerRegister(professorData, "professor");
-  };
 
   const handleStudentImageChange = (event) => {
     setStudentProfilePicture(event.target.files[0]);
