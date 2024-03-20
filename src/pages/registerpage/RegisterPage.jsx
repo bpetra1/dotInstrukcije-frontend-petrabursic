@@ -43,6 +43,8 @@ function RegisterPage() {
     reader.onload = () => {
         const profilePictureBase64 = reader.result.split(",")[1];
 
+        const profilePictureUrl = `data:image/png;base64,${profilePictureBase64}`;
+
         // Prepare the data to be sent
         const studentData = new FormData();
         studentData.append("name", studentName);
@@ -50,7 +52,7 @@ function RegisterPage() {
         studentData.append("email", studentEmail);
         studentData.append("password", studentPassword);
         studentData.append("confirmPassword", studentConfirmPassword);
-        studentData.append("profilePictureUrl", profilePictureBase64);
+        studentData.append("profilePictureUrl", profilePictureUrl);
 
         // Send the data to the server
         handlerRegister(studentData, "student");
@@ -64,6 +66,7 @@ const handleProfessorSubmit = async (event) => {
   const reader = new FileReader();
   reader.onload = () => {
       const profilePictureBase64 = reader.result.split(",")[1];
+      const profilePictureUrl = `data:image/png;base64,${profilePictureBase64}`;
 
       const professorData = new FormData();
       professorData.append("name", professorName);
@@ -71,7 +74,7 @@ const handleProfessorSubmit = async (event) => {
       professorData.append("email", professorEmail);
       professorData.append("password", professorPassword);
       professorData.append("confirmPassword", professorConfirmPassword);
-      professorData.append("profilePictureUrl", profilePictureBase64);
+      professorData.append("profilePictureUrl", profilePictureUrl);
       professorData.append("subjects", professorSubjects.map((s) => s.url));
 
       handlerRegister(professorData, "professor");
