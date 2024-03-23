@@ -5,6 +5,11 @@
   justify-content: center;
 }
 
+.student-image {
+  width: 150px; 
+  height: auto; 
+}
+
 .profilepage-container {
   width: 90%;
   margin: 2rem 0;

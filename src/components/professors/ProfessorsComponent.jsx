@@ -12,20 +12,20 @@ function ProfessorsComponent({
   buttonText,
   buttonVariant,
 }) {
-  const [dialogOpen, setDialogOpen] = useState(false);
+  const [selectedProfessor, setSelectedProfessor] = useState(null);
 
-  const handleButtonClick = () => {
-    setDialogOpen(true);
+  const handleButtonClick = (professor) => {
+    setSelectedProfessor(professor);
   };
 
   const handleCloseDialog = () => {
-    setDialogOpen(false);
+    setSelectedProfessor(null);
   };
   return (
     <>
       <div className="professor-container">
         {professors?.map((professor) => (
-          <div key={professor._id} className="professor">
+          <div key={professor.id} className="professor">
             <img
               src={
                 professor.profilePictureUrl
@@ -55,11 +55,11 @@ function ProfessorsComponent({
                   <p>{professor.time}</p>
                 </div>
               )}
-              <Button onClick={handleButtonClick} variant={buttonVariant ? buttonVariant : "contained"}>
-                {buttonText ? buttonText : "Dogovori termin"}
-              </Button>
+              <Button onClick={() => handleButtonClick(professor)} variant={buttonVariant ? buttonVariant : "contained"}>
+              {buttonText ? buttonText : "Dogovori termin"}
+            </Button>
             </div>
-            <DateTimeDialog open={dialogOpen} onClose={handleCloseDialog} professor={professor} />
+            <DateTimeDialog open={selectedProfessor === professor} onClose={handleCloseDialog} professor={professor} />
           </div>
           
         ))}

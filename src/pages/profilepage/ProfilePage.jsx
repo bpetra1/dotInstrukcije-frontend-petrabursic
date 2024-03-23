@@ -9,17 +9,17 @@ function ProfilePage() {
   }
   let user = JSON.parse(localStorage.getItem('user'));
 
-  const [pastInstructions, setPastInstructions] = useState([]);
-  const [upcomingInstructions, setUpcomingInstructions] = useState([]);
-  const [sentInstructionRequests, setSentInstructionRequests] = useState([]);
+  const [pastInstructions, setPastInstructions] = useState(null);
+  const [upcomingInstructions, setUpcomingInstructions] = useState(null);
+  const [sentInstructionRequests, setSentInstructionRequests] = useState(null);
 
   useEffect(() => {
     const fetchInstructions = async () => {
       const fetchedInstructions = await getInstructions();
-      setPastInstructions(fetchedInstructions.pastInstructions);
-      setUpcomingInstructions(fetchedInstructions.upcomingInstructions);
-      setSentInstructionRequests(fetchedInstructions.sentInstructionRequests);
-    };
+      setPastInstructions(fetchedInstructions.instructions.pastInstructions);
+      setUpcomingInstructions(fetchedInstructions.instructions.upcomingInstructions);
+      setSentInstructionRequests(fetchedInstructions.instructions.sentInstructionRequests);
+        };
 
     fetchInstructions();
   }, []);
@@ -29,7 +29,7 @@ function ProfilePage() {
       <div className="profilepage-wrapper">
         <div className="profilepage-container">
           <div className="student-info">
-            <img src={user.image} className="student-image" />
+            <img src={user.profilePictureUrl} className="student-image" />
             <div>
               <h1>{user.name} {user.surname}</h1>
               <p>{user.description}</p>
